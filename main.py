@@ -1,8 +1,11 @@
+import tensorflow as tf
 from SegNet import SegNet
+from utils import *
 
-model = SegNet()
+#main_parameters
+DATADIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data'
+CATEGORIES = ["img", "label"]
+IMG_SIZE = 512
 
-model.summary()
-
-keras.utils.plot_model(model, to_file='model.png', show_shapes=False,
-    show_layer_names=True, rankdir='TB', expand_nested=False, dpi=96)
+#load images and masks -> resize and normalise
+data = create_training_data(DATADIR,CATEGORIES, IMG_SIZE)
