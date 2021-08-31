@@ -72,6 +72,6 @@ def SegNet(input_height=512, input_width=512):
                kernel_initializer='he_normal')(o)
     o = Conv2D(64, (3,3), activation='relu', padding='same', name='block10_conv2', data_format=image_ordering,
                kernel_initializer='he_normal')(o)
-    o = Dense(2, activation='softmax')(o)
+    o = Dense(1, activation='softmax')(o)
     model = keras.Model(inputs=img_input, outputs=o)
     return model
