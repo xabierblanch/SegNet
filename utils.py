@@ -1,5 +1,6 @@
 import cv2
 import os
+import matplotlib.pyplot as plt
 
 def create_training_data(DATADIR, CATEGORIES, IMG_SIZE):
   training_data = []
@@ -20,3 +21,19 @@ def create_training_data(DATADIR, CATEGORIES, IMG_SIZE):
       except Exception as e:
         pass
   return training_data
+
+def show_image(id, data):
+  plt.imshow(data[id][0])  # interpolation='none'
+  plt.xlabel('Values = Min: {:.1f}  Max: {:.1f}'.format(data[id][0].min(), data[id][0].max()))
+  plt.ylabel('Image size = ' + str(data[id][0].shape))
+  plt.title('RAW Image (id: ' + str(id) + ')')
+  plt.show()
+  plt.imshow(data[id][1], cmap='jet')  # interpolation='none'
+  plt.title('MASK Image (id: ' + str(id) + ')')
+  plt.xlabel('Values = Min: {:.1f}  Max: {:.1f}'.format(data[id][1].min(), data[id][1].max()))
+  plt.ylabel('Image size = ' + str(data[id][1].shape))
+  plt.show()
+  plt.imshow(data[id][0])  # interpolation='none'
+  plt.imshow(data[id][1], cmap='jet', alpha=0.35)  # interpolation='none'
+  plt.title('MIX Image (id: ' + str(id) + ')')
+  plt.show()
