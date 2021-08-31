@@ -21,10 +21,10 @@ train_images, train_masks, training_data = create_training_data(DATADIR, IMG_SIZ
 #load CNN SegNet
 model = SegNet(IMG_SIZE,IMG_SIZE)
 model.summary()
-model.compile(optimizer='sgd', loss = tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
+model.compile(optimizer='sgd', loss = tf.keras.losses.BinaryCrossentropy(from_logits=True), metrics=['accuracy'])
 history = model.fit(train_images, train_masks, batch_size=1 ,epochs=5)
 
-# pred_mask = model.predict(train_images[0])
+pred_mask = model.predict(train_images[0])
 
 
 #load CNN SegNet
