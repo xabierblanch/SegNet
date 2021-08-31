@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
+from tensorflow.keras.optimizers import SGD
 from SegNet import *
 from CNN_test import *
 from utils import *
@@ -20,16 +21,20 @@ train_images, train_masks, training_data = create_training_data(DATADIR, IMG_SIZ
 #load CNN SegNet
 # model = SegNet(IMG_SIZE,IMG_SIZE)
 # model.summary()
-# model.compile(optimizer='sgd', loss = tf.keras.losses.SparseCategoricalCrossentropy(),
-#               metrics=['accuracy'])
-#
-# pred_mask = model.predict(train_images[0])
+# # model.compile(optimizer='sgd', loss = tf.keras.losses.SparseCategoricalCrossentropy(),
+# #               metrics=['accuracy'])
+# #
+# # pred_mask = model.predict(train_images[0])
 
 
 #load CNN SegNet
 model=CNN_test()
 model.summary()
-# model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
-#
-# model.fit(train_images, train_masks, epochs=5)
+opt = SGD(lr=0.001, momentum=0.9, decay=0.0005)
+model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+history = model.fit(train_images, train_masks, batch_size=10 ,epochs=5)
+
+pred_mask = model.predict(train_images[0])
+
+
 
