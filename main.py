@@ -16,7 +16,7 @@ IMG_SIZE = 128
 train_images, train_masks, training_data = create_training_data(DATADIR, IMG_SIZE)
 
 #chech images
-# show_images(25, training_data)
+show_images(25, training_data)
 
 #load CNN SegNet
 model = SegNet(IMG_SIZE,IMG_SIZE)
@@ -24,7 +24,7 @@ model.summary()
 model.compile(optimizer='sgd', loss = tf.keras.losses.BinaryCrossentropy(from_logits=True), metrics=['accuracy'])
 history = model.fit(train_images, train_masks, batch_size=1 ,epochs=5)
 
-pred_mask = model.predict(train_images[0])
+pred_mask = model.predict(train_images)
 
 
 #load CNN SegNet
@@ -35,8 +35,11 @@ pred_mask = model.predict(train_images[0])
 # history = model.fit(train_images, train_masks, batch_size=1 ,epochs=5)
 #
 # pred_mask = model.predict(train_images)
-# plt.imshow(pred_mask[0])
-# plt.show()
+
+
+plt.imshow(train_images[0])
+plt.imshow(pred_mask[0], alpha=0.35)
+plt.show()
 
 
 
