@@ -30,8 +30,8 @@ train_images, train_masks, training_data = create_training_data(DATADIR, IMG_SIZ
 #load CNN SegNet
 model=CNN_test(IMG_SIZE)
 model.summary()
-opt = SGD(lr=0.001, momentum=0.9, decay=0.0005)
-model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+# opt = SGD(lr=0.001, momentum=0.9, decay=0.0005)
+model.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
 history = model.fit(train_images, train_masks, batch_size=1 ,epochs=5)
 
 # pred_mask = model.predict(train_images)
