@@ -10,7 +10,7 @@ print('Keras version: ', keras.__version__)
 
 #main_parameters
 DATADIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data'
-IMG_SIZE = 512
+IMG_SIZE = 256
 
 #load images and masks -> resize and normalise
 train_images, train_masks, training_data = create_training_data(DATADIR, IMG_SIZE)
@@ -28,13 +28,15 @@ train_images, train_masks, training_data = create_training_data(DATADIR, IMG_SIZ
 
 
 #load CNN SegNet
-model=CNN_test()
+model=CNN_test(IMG_SIZE)
 model.summary()
 opt = SGD(lr=0.001, momentum=0.9, decay=0.0005)
 model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 history = model.fit(train_images, train_masks, batch_size=10 ,epochs=5)
 
-pred_mask = model.predict(train_images[0])
+pred_mask = model.predict(train_images)
+plt.imshow(pred_mask[0])
+plt.show
 
 
 
