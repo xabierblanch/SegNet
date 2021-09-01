@@ -3,39 +3,34 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-def create_training_data(DATADIR, IMG_SIZE):
-  for folder in os.listdir(DATADIR):
-    path = os.path.join(DATADIR, folder, 'img')
-    images = []
-    masks = []
-    for img in os.listdir(path):
-      img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_COLOR)
-      img_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
-      img_array = cv2.normalize(img_array, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-      images.append([img_array])
-      if folder == "test":
-        continue
-      else:
-        mask_array = cv2.imread(os.path.join(DATADIR, folder, 'label', img), cv2.IMREAD_GRAYSCALE)
-        mask_array = cv2.resize(mask_array, (IMG_SIZE, IMG_SIZE))
-        mask_array = cv2.normalize(mask_array, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX,
-                                        dtype=cv2.CV_32F)
-        masks.append([mask_array])
-    if folder == 'train':
-      train_images = np.array(images)
-      train_images = train_images.reshape(len(os.listdir(os.path.join(DATADIR, folder, 'img'))), IMG_SIZE, IMG_SIZE, 3)
-      train_masks = np.array(masks)
-      train_masks = train_masks.reshape(len(os.listdir(os.path.join(DATADIR, folder, 'label'))), IMG_SIZE, IMG_SIZE, 1)
-    elif folder == 'val':
-      val_images = np.array(images)
-      val_images = val_images.reshape(len(os.listdir(os.path.join(DATADIR, folder, 'img'))), IMG_SIZE, IMG_SIZE, 3)
-      val_masks = np.array(masks)
-      val_masks = val_masks.reshape(len(os.listdir(os.path.join(DATADIR, folder, 'label'))), IMG_SIZE, IMG_SIZE, 1)
-    elif folder == 'test':
-      test_images = np.array(images)
-      test_images = test_images.reshape(len(os.listdir(os.path.join(DATADIR, folder, 'img'))), IMG_SIZE, IMG_SIZE, 3)
+def create_datasets(DIR, IMG_SIZE):
+  images = []
+  masks = []
+  path = os.path.join(DIR, 'img')
+  for img in os.listdir(path):
+    if not os.listdir(path):
+      print('Directory ' + DIR + '/img is empty')
+      continue
+    else:
+    img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_COLOR)
+    img_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
+    img_array = cv2.normalize(img_array, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+    images.append([img_array])
+    if not os.listdir(os.path.join(DIR, 'label', img)):
+      print('Directory ' + DIR + '/label is empty')
+      continue
+    else:
+    mask_array = cv2.imread(os.path.join(DIR, 'label', img), cv2.IMREAD_GRAYSCALE)
+    mask_array = cv2.resize(mask_array, (IMG_SIZE, IMG_SIZE))
+    mask_array = cv2.normalize(mask_array, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX,
+                                      dtype=cv2.CV_32F)
+    masks.append([mask_array])
 
-  return train_images, train_masks, val_images, val_masks, test_images
+  train_images = np.array(images)
+  train_images = train_images.reshape(len(os.listdir(os.path.join(DIR, 'img'))), IMG_SIZE, IMG_SIZE, 3)
+  train_masks = np.array(masks)
+  train_masks = train_masks.reshape(len(os.listdir(os.path.join(DIR, 'label'))), IMG_SIZE, IMG_SIZE, 1)
+  return train_images, train_masks
 
 def show_images(id, data):
   plt.imshow(data[id][0])  # interpolation='none'

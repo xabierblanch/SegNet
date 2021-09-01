@@ -10,11 +10,15 @@ print('Tensorflow version: ', tf.__version__)
 print('Keras version: ', keras.__version__)
 
 #main_parameters
-DATADIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data'
+TRAIN_DIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data/train'
+VAL_DIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data/val'
+TEST_DIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data/test'
 IMG_SIZE = 128
 
 #load images and masks -> resize and normalise
-train_images, train_masks, val_images, val_masks, test_images = create_training_data(DATADIR, IMG_SIZE)
+train_images, train_masks = create_datasets(TRAIN_DIR, IMG_SIZE)
+val_images, val_masks = create_datasets(VAL_DIR, IMG_SIZE)
+test_images, test_masks = create_datasets(TEST_DIR, IMG_SIZE)
 
 #chech images
 # show_images(25, training_data)
