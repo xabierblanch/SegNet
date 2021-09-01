@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def create_training_data(DATADIR, IMG_SIZE):
-  training_data = []
   train_images = []
   train_masks = []
   path = os.path.join(DATADIR, 'img')
@@ -25,7 +24,7 @@ def create_training_data(DATADIR, IMG_SIZE):
   train_masks = np.array(train_masks)
   train_masks = train_masks.reshape(len(os.listdir(path)), IMG_SIZE, IMG_SIZE, 1)
 
-  return train_images, train_masks, training_data
+  return train_images, train_masks
 
 def show_images(id, data):
   plt.imshow(data[id][0])  # interpolation='none'
