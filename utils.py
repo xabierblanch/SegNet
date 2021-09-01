@@ -17,7 +17,6 @@ def create_training_data(DATADIR, IMG_SIZE):
     mask_array = cv2.normalize(mask_array, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX,
                                     dtype=cv2.CV_32F)
     train_masks.append([mask_array])
-    training_data.append([img_array, mask_array])
 
   train_images = np.array(train_images)
   train_images = train_images.reshape(len(os.listdir(path)), IMG_SIZE, IMG_SIZE, 3)
