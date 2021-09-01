@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.preprocessing.image import *
 from SegNet import *
 from CNN_test import *
 from utils import *
@@ -13,7 +14,7 @@ DATADIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data'
 IMG_SIZE = 128
 
 #load images and masks -> resize and normalise
-[images, masks] = create_training_data(DATADIR, IMG_SIZE)
+train_images, train_masks, val_images, val_masks, test_images = create_training_data(DATADIR, IMG_SIZE)
 
 #chech images
 # show_images(25, training_data)
@@ -35,3 +36,5 @@ plt.show()
 
 
 
+TRAIN_DIR = 'C:/Users/XBG-KIWA/Documents/01_GITHUB_(XBG)/SegNet/data'
+VALIDATION_DIR = './datasets/validation'
